@@ -44,7 +44,8 @@
                         @foreach ($cartItems as $i => $product)
                             <tr>
                                 <td>{{$i + 1}}</td>
-                                <td><a href="/products/{{$product['item']->id}}"><img style="width:50px;" src="{{asset('images/no-image.png')}}" alt=""></a></td>
+                                {{-- <td><a href="/products/{{$product['item']->id}}"><img style="width:50px;" src="{{asset('images/no-image.png')}}" alt=""></a></td> --}}
+                                <td><a href="/products/{{$product['item']->id}}"><img style="width:50px;" src="{{$product['item']->image ? asset('storage/'.$product['item']->image) : asset('images/no-image.png')}}" alt=""></a></td>
                                 <td>{{$product['item']->title}}</td>
                                 <td>${{$product['item']->price}}</td>
                                 <td>

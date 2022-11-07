@@ -36,7 +36,10 @@
                 </p>
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <button type="button" class="btn btn-success btn-lg px-4 me-md-2"><i class="fa-solid fa-cart-shopping"></i> Add To Cart</button>
+                <form action="/{{$product->id}}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-success btn-lg px-4 me-md-2"><i class="fa-solid fa-cart-shopping"></i> Add To Cart</button>
+                </form>
             </div>
         </div>
     </div>
