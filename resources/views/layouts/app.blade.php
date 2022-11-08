@@ -8,9 +8,13 @@
     <script src="//unpkg.com/alpinejs" defer></script>
 
     <!-- CSRF Token -->
+    {{-- important so you can use ajax and jquery --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Demo Shop</title>
+
+    {{-- jQuery CDN --}}
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -105,5 +109,6 @@
     
     {{-- Flash Message --}}
     <x-flash-message />
+
 </body>
 </html>

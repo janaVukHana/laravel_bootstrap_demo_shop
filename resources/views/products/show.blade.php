@@ -55,7 +55,7 @@
                 <h2>Add comment ...</h2>
                 <form action="/products/comment" method="POST">
                     @csrf
-                    <input type="hidden" name="id" value="{{$product->id}}">
+                    <input type="hidden" name="id" id="id" value="{{$product->id}}">
                     <div class="my-1">
                         <label for="comment" class="form-label">Comment</label>
                         <textarea 
@@ -68,7 +68,7 @@
                             <p class="text-danger text-sm mt-1">{{$message}}</p>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-success px-5">Add</button>
+                    <button type="submit" id="addCommentBtn" class="btn btn-success px-5">Add</button>
                 </form>
             </div>
         @endauth
@@ -83,5 +83,33 @@
     </div>
     {{-- here ends commenting div --}}
 </div>
+
+{{-- <script> --}}
+    {{-- // setup ajax
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+    //     }
+    // }); --}}
+
+    {{-- // add comment function by id
+    // $('#addCommentBtn').click(function(e) {
+    //     const comment = $('#comment').val();
+    //     const id = $('#id').val();
+
+    //     $.ajax({
+    //         type: 'POST',
+    //         dataType: 'json',
+    //         data: {comment:comment, _token: '{{csrf_token()}}'},
+    //         url: '/products/'+id,
+    //         success: function(data) {
+    //             console.log('Data saved');
+    //         },
+    //         error: function(e) {
+    //             console.log(e);
+    //         }
+    //     });
+    // }); --}}
+{{-- </script> --}}
 
 @endsection

@@ -28,6 +28,7 @@ Route::get('/about-us', function() {
     return view('about-us');
 });
 
+// products pages and  shopping cart pages
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::post('/{product}', [ProductController::class, 'addToCart']);
 Route::get('/products/shopping-cart', [ProductController::class, 'shoppingCart'])->name('products.shopping-cart');
@@ -35,7 +36,7 @@ Route::post('/products/shopping-cart', [ProductController::class, 'checkout'])->
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::post('/products/shopping-cart/destroy', [ProductController::class, 'emptyCart'])->middleware('auth');
 
-// Note: use group for prefix and middlewares
+// admin 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function() {
     Route::get('/products', [AdminController::class, 'products'])->name('admin.products');
     Route::get('/products/create', [AdminController::class, 'create'])->name('admin.products.create');
@@ -45,6 +46,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function() {
     Route::delete('/products/delete/{product}', [AdminController::class, 'destroy']);
 });
 
+// register, login and logout functionality
 Route::prefix('users')->group(function() {
     Route::get('/register', [UserController::class, 'create'])->middleware('guest')->name('users.create');
     Route::post('/register', [UserController::class, 'store'])->middleware('guest');
@@ -53,4 +55,5 @@ Route::prefix('users')->group(function() {
     Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
 });
 
-Route::post('/products/comment', [CommentController::class, 'addComment'])->middleware('auth');
+// add comment to product
+Route::post('/products/comment/add', [CommentController::class, 'addComment'])->middleware('auth')->name('products.comment.add');
