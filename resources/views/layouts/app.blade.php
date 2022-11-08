@@ -46,7 +46,9 @@
                     <a class="nav-link" href="/products/shopping-cart">
                         Shopping Cart <i class="fa-solid fa-cart-shopping"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{session()->get('cart') ? count(session()->get('cart')->items) : '0'}}
+                          {{session()->has('cart') && session()->get('cart')->items ? count(session()->get('cart')->items) : '0'}}
+                          
+                          {{-- {{session()->get('cart') ? count(session()->get('cart')->items) : '0'}} --}}
                         </span>
                     </a>
                   </li>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,7 @@ class ProductController extends Controller
      * This function show all products
      */
     public function index() {
+        // dd(session()->has('cart'));
         
         return view('products.index', ['products' => Product::latest()->filter(request(['category', 'search']))->paginate(3)]);
     }
@@ -20,7 +22,10 @@ class ProductController extends Controller
      * This function show single products
      */
     public function show(Product $product) {
-        return view('products.show', ['product' => $product]);
+        return view('products.show', [
+            'product' => $product,
+            'comments' => $product->comment->sortByDesc('created_at')
+        ]);
     }
 
     /**
@@ -37,7 +42,12 @@ class ProductController extends Controller
     
         $product = $product;
 
-        $oldCart = session()->get('cart');
+        if(session()->has('cart')) {
+            $oldCart = session()->get('cart')->items ? session()->get('cart') : null;
+        } else {
+            $oldCart = null;
+        }
+
         if($oldCart) {
             if(array_key_exists($product->id, $oldCart->items)) {
                 return redirect('/')->with('message', 'Product already in the Cart.');
@@ -67,6 +77,10 @@ class ProductController extends Controller
 
         session()->put('cart', $cart);
 
+        if(!session()->get('cart')->items) {
+            return back()->with('message', 'Your cart is empty');
+        } 
+
         return view('products.checkout', [
             'cartItems' => session()->get('cart')->items,
             'totalPrice' => session()->get('cart')->totalPrice
@@ -76,8 +90,8 @@ class ProductController extends Controller
     /**
      * This function Empty shopping cart
      */
-    public function emptyCart(Request $request) {
-        $request->session()->forget('cart');
+    public function emptyCart() {
+        session()->forget('cart');
 
         return back()->with('message', 'Cart is empty');
     }

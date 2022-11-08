@@ -34,7 +34,7 @@
                 </thead>
                 <tbody>
 
-                    @if (!session()->get('cart'))
+                    @if (!session()->has('cart') || !session()->get('cart')->items)
                         <tr><td><p>No products found!</p></td></tr>
                     @else
                         @php

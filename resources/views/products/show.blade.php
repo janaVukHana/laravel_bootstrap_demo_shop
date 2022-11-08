@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+{{-- @php
+    dd($comments);
+@endphp --}}
+
 @section('content')
 <div class="container col-xxl-8 px-4 py-5">
     <div class="row d-flex align-center">
@@ -43,6 +47,41 @@
             </div>
         </div>
     </div>
+
+    {{-- here goes comments --}}
+    <div class="row d-flex align-center mt-3 p-3 shadow">
+        @auth
+            <div class="container my-3">
+                <h2>Add comment ...</h2>
+                <form action="/products/comment" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" value="{{$product->id}}">
+                    <div class="my-1">
+                        <label for="comment" class="form-label">Comment</label>
+                        <textarea 
+                            type="text" 
+                            id="comment" 
+                            name="comment" 
+                            class="form-control"
+                        >{{old('comment')}}</textarea>
+                        @error('comment')
+                            <p class="text-danger text-sm mt-1">{{$message}}</p>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-success px-5">Add</button>
+                </form>
+            </div>
+        @endauth
+        <div class="container">
+            @foreach ($comments as $comment)
+                <div class="d-flex justify-content-between bg-dark text-light py-1 px-4 mb-1 rounded">
+                    <p>{{$comment->comment}}</p>
+                    <p><small class="text-sm text-light">{{$comment->created_at}}</small></p>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    {{-- here ends commenting div --}}
 </div>
 
 @endsection

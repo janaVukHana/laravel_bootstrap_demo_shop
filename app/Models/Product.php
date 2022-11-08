@@ -22,4 +22,8 @@ class Product extends Model
                 ->orWhere('description', 'like', '%' . request('search') . '%');
         }
     }
+
+    public function comment() {
+        return $this->hasMany(Comment::class, 'product_id');
+    }
 }

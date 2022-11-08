@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 
@@ -29,23 +30,27 @@ Route::get('/about-us', function() {
 
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::post('/{product}', [ProductController::class, 'addToCart']);
-Route::get('/products/shopping-cart', [ProductController::class, 'shoppingCart'])->middleware('auth')->name('products.shopping-cart');
+Route::get('/products/shopping-cart', [ProductController::class, 'shoppingCart'])->name('products.shopping-cart');
 Route::post('/products/shopping-cart', [ProductController::class, 'checkout'])->middleware('auth');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::post('/products/shopping-cart/destroy', [ProductController::class, 'emptyCart'])->middleware('auth');
 
-// Note: use group for prefix and middleware
-Route::group(['prefix' => 'admin'], function() {
-    Route::get('/products', [AdminController::class, 'products'])->middleware(['auth', 'admin'])->name('admin.products');
-    Route::get('/products/create', [AdminController::class, 'create'])->middleware(['auth', 'admin'])->name('admin.products.create');
-    Route::post('/products/create', [AdminController::class, 'store'])->middleware(['auth', 'admin']);
-    Route::get('/products/edit/{product}', [AdminController::class, 'edit'])->middleware(['auth', 'admin'])->name('admin.products.edit');
-    Route::put('/products/edit/{product}', [AdminController::class, 'update'])->middleware(['auth', 'admin']);
-    Route::delete('/products/delete/{product}', [AdminController::class, 'destroy'])->middleware(['auth', 'admin']);
+// Note: use group for prefix and middlewares
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function() {
+    Route::get('/products', [AdminController::class, 'products'])->name('admin.products');
+    Route::get('/products/create', [AdminController::class, 'create'])->name('admin.products.create');
+    Route::post('/products/create', [AdminController::class, 'store']);
+    Route::get('/products/edit/{product}', [AdminController::class, 'edit'])->name('admin.products.edit');
+    Route::put('/products/edit/{product}', [AdminController::class, 'update']);
+    Route::delete('/products/delete/{product}', [AdminController::class, 'destroy']);
 });
 
-Route::get('/users/register', [UserController::class, 'create'])->name('users.create');
-Route::post('/users/register', [UserController::class, 'store']);
-Route::get('/users/login', [UserController::class, 'login'])->name('users.login');
-Route::post('/users/login', [UserController::class, 'authenticate']);
-Route::get('/users/logout', [UserController::class, 'logout']);
+Route::prefix('users')->group(function() {
+    Route::get('/register', [UserController::class, 'create'])->middleware('guest')->name('users.create');
+    Route::post('/register', [UserController::class, 'store'])->middleware('guest');
+    Route::get('/login', [UserController::class, 'login'])->middleware('guest')->name('users.login');
+    Route::post('/login', [UserController::class, 'authenticate'])->middleware('guest');
+    Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
+});
+
+Route::post('/products/comment', [CommentController::class, 'addComment'])->middleware('auth');
