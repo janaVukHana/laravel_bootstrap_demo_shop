@@ -96,4 +96,5 @@ class ProductController extends Controller
         return back()->with('message', 'Cart is empty');
     }
 
+
 }
