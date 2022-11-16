@@ -33,6 +33,8 @@ Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::post('/{product}', [ProductController::class, 'addToCart']);
 Route::get('/products/shopping-cart', [ProductController::class, 'shoppingCart'])->name('products.shopping-cart');
 Route::post('/products/shopping-cart', [ProductController::class, 'checkout'])->middleware('auth');
+Route::get('/products/order', [ProductController::class, 'showOrderForm'])->middleware('auth')->name('products.order');
+Route::post('/products/order', [ProductController::class, 'makeOrder'])->middleware('auth')->name('products.make-order');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::post('/products/shopping-cart/destroy', [ProductController::class, 'emptyCart'])->middleware('auth');
 

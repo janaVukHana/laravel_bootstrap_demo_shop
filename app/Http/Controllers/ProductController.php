@@ -81,10 +81,31 @@ class ProductController extends Controller
             return back()->with('message', 'Your cart is empty');
         } 
 
-        return view('products.checkout', [
+        return redirect('/products/order');
+
+        // return view('products.checkout', [
+        //     'cartItems' => session()->get('cart')->items,
+        //     'totalPrice' => session()->get('cart')->totalPrice
+        // ]);
+    }
+
+    /**
+     * This function show order form
+     */
+    public function showOrderForm() {
+         return view('products.checkout', [
             'cartItems' => session()->get('cart')->items,
             'totalPrice' => session()->get('cart')->totalPrice
         ]);
+    }
+
+    // This function simulate order and return success message
+    public function makeOrder(Request $request) {
+        $formFields = $request->validate([
+            'first_name' => 'required|min:3'
+        ]);
+
+        return redirect('/')->with('message', 'Order success');
     }
 
     /**

@@ -42,17 +42,17 @@
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <label for="firstName" class="form-label">First name</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="" name="first_name" value="">
+                                <input type="text" class="form-control" id="firstName" placeholder="" name="first_name" value="{{old('first_name')}}">
                                 @error('first_name')
                                     <p class="text-danger text-sm mt-1">{{$message}}</p>
                                 @enderror
                             </div>
-                            {{-- <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <label for="lastName" class="form-label">Last name</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
-                                <div class="invalid-feedback">
-                                    Valid last name is required.
-                                </div>
+                                <input type="text" class="form-control" id="lastName" placeholder="" value="{{old('last_name')}}" name="last_name">
+                                @error('last_name')
+                                    <p class="text-danger text-sm mt-1">{{$message}}</p>
+                                @enderror
                             </div>
                             <div class="col-12">
                                 <label for="username" class="form-label">Username</label>
@@ -165,7 +165,7 @@
                                     Security code required
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                         <hr class="my-4">
                         <button class="w-100 btn btn-success btn-lg" type="submit">Order</button>
                     </form>
