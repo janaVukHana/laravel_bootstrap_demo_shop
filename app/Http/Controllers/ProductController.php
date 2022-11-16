@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Mail\OrderMail;
 use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ProductController extends Controller
 {
@@ -99,7 +101,10 @@ class ProductController extends Controller
         ]);
     }
 
-    // This function simulate order and return success message
+    /**
+     * This function simulate order and return success message
+     * aaaaand send email
+     */
     public function makeOrder(Request $request) {
         $formFields = $request->validate([
             'first_name' => 'required|min:3',
@@ -107,6 +112,8 @@ class ProductController extends Controller
             'email' => 'required|email',
             'address' => 'required'
         ]);
+
+        Mail::to(auth()->user()->email)->send(new OrderMail());
 
         return redirect('/')->with('message', 'Order success');
     }

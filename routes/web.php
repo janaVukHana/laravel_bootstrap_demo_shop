@@ -1,5 +1,5 @@
 <?php
-
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
@@ -7,7 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProductController;
-use App\Models\Product;
+use App\Mail\OrderMail;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +19,9 @@ use App\Models\Product;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/email', function() {
+    return new OrderMail();
+});
 
 Route::get('/contact', function() {
     return view('contact');
