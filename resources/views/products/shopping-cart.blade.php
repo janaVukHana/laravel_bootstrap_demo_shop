@@ -20,7 +20,7 @@
     </div>
 
     <div class="container">
-        <form action="/products/shopping-cart" method="POST">
+        <form action="/products/order">
             @csrf
             <table class="table table-dark table-striped">
                 <thead>

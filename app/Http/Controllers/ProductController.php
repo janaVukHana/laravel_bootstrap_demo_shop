@@ -66,7 +66,10 @@ class ProductController extends Controller
     /**
      * This function update number of products and send user to checkout page
      */
-    public function checkout(Request $request) {
+    public function showOrderForm(Request $request) {
+        // dd(session('cart'));
+        // cart ima items with two item
+        // but totalPrice is 0 instead real price
 
         $cartItems = session()->get('cart');
         $cart = new Cart($cartItems);
@@ -81,7 +84,7 @@ class ProductController extends Controller
             return back()->with('message', 'Your cart is empty');
         } 
 
-        return view('products.checkout', [
+        return view('products.order', [
             'cartItems' => session()->get('cart')->items,
             'totalPrice' => session()->get('cart')->totalPrice
         ]);
@@ -94,6 +97,17 @@ class ProductController extends Controller
         session()->forget('cart');
 
         return back()->with('message', 'Cart is empty');
+    }
+
+    /**
+     * This function just send user to product page with message that order is success.
+     */
+    public function order(Request $request) {
+        // $formFields = $request->validate([
+        //     'firstName' => 'required'
+        // ]);
+
+        return redirect('/')->with('message', 'You ordered some stuff');
     }
 
 }
