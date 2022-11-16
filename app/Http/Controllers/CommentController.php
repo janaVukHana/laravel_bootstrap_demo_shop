@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function addComment(Request $request) {
+    public function addComment(Request $request, Product $product) {
         $formFields = $request->validate([
             'comment' => ['required', 'min:10'],
         ]);
@@ -16,11 +16,6 @@ class CommentController extends Controller
         $formFields['product_id'] = $request->id;
 
         Comment::create($formFields);
-
-        // Comment::create([
-        //     'product_id' => $product->id,
-        //     'comment' => $request->comment
-        // ]);
         
         return back()->with('message', 'Comment added');
     }
