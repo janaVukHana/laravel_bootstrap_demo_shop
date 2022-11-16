@@ -102,7 +102,10 @@ class ProductController extends Controller
     // This function simulate order and return success message
     public function makeOrder(Request $request) {
         $formFields = $request->validate([
-            'first_name' => 'required|min:3'
+            'first_name' => 'required|min:3',
+            'last_name' => 'required|min:3',
+            'email' => 'required|email',
+            'address' => 'required'
         ]);
 
         return redirect('/')->with('message', 'Order success');
