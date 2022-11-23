@@ -41,4 +41,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Accessor :: manipulate database data before display on page
+    public function getNameAttribute($name) {
+        // first letter uppercase
+        // return ucfirst($name);
+
+        // all letters uppercase
+        return strtoupper($name);
+    }
+
 }

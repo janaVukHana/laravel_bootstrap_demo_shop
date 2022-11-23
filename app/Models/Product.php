@@ -26,4 +26,9 @@ class Product extends Model
     public function comment() {
         return $this->hasMany(Comment::class, 'product_id');
     }
+
+    // PRACTICE:    Mutator :: manipulate data before goes in database
+    // public function setImageAttribute($path) {
+    //     $this->attributes['image'] = 'storage/' . $path;
+    // }
 }
