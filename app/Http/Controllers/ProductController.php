@@ -115,6 +115,8 @@ class ProductController extends Controller
 
         Mail::to(auth()->user()->email)->send(new OrderMail());
 
+        session()->forget('cart');
+
         return redirect('/')->with('message', 'Order success');
     }
 
