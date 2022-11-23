@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
 {
@@ -37,6 +38,10 @@ class AdminController extends Controller
 
         if($request->hasFile('image')) {
             $formFields['image'] = $request->file('image')->store('products', 'public');
+
+            // Practice : composer require intervention/image
+            // $image = Image::make(public_path('storage/' . $formFields['image']))->fit(300, 218);
+            // $image->save();
         } 
         // dd($formFields['image']);
 
