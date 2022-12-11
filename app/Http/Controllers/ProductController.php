@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
 use App\Mail\OrderMail;
 use App\Models\Comment;
 use App\Models\Product;
@@ -112,6 +113,8 @@ class ProductController extends Controller
             'email' => 'required|email',
             'address' => 'required'
         ]);
+
+        $order = new Order();
 
         Mail::to(auth()->user()->email)->send(new OrderMail());
 

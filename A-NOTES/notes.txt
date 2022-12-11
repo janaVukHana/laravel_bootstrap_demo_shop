@@ -1,0 +1,8 @@
+php artisan make:notification NewChirp
+
+public function __construct(public Chirp $chirp) {}
+_______________________________________________________________________________________
+
+php artisan make:event ChirpCreated
+
+public function __construct(public Chirp $chirp)
