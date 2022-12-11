@@ -11,7 +11,7 @@
     {{-- important so you can use ajax and jquery --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Demo Shop</title>
+    <title>Demo Shop Notification</title>
 
     {{-- jQuery CDN --}}
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
