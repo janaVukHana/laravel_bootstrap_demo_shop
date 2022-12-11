@@ -116,7 +116,7 @@ class ProductController extends Controller
 
         $order = new Order();
 
-        Mail::to(auth()->user()->email)->send(new OrderMail());
+        // Mail::to(auth()->user()->email)->send(new OrderMail());
 
         session()->forget('cart');
 

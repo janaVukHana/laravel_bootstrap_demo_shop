@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Events\OrderCreated;
 use App\Notifications\NewOrder;
@@ -28,6 +29,13 @@ class SendOrderCreatedNotifications implements ShouldQueue
      */
     public function handle(OrderCreated $event)
     {
-        auth()->user->notify(new Order($event->order));
+        // auth()->user->notify(new NewOrder($event->order));
+
+        // foreach (User::whereNot('id', $event->chirp->user_id)->cursor() as $user) {
+        //     $user->notify(new NewChirp($event->chirp));
+        // }
+
+        $user = User::where('id', auth()->user->id)->cursor();
+        $user->notify(new NewOrder($event->order));
     }
 }
